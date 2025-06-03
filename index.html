@@ -29,7 +29,7 @@
       font-weight: bold;
     }
     .icon {
-      display: flex;
+    
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -42,7 +42,55 @@
   </style>
 </head>
 <body>
+<style>
+  .icon {
+    
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 4px;
+  }
+  .icon {
+    font-size: 0.85em;
+    font-weight: bold;
+  }
+  .icon span {
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-top: 2px;
+    display: block;
+  }
+</style>
+<script>
+  const days = ['M', 'T', 'W', 'Th', 'F'];
+  const today = new Date();
+  document.addEventListener('DOMContentLoaded', function() {
+    let dayIndex = today.getDay() - 1; // Monday = 0
+    if (dayIndex < 0 || dayIndex > 4) dayIndex = null; // Only highlight Mon-Fri
 
+    if (dayIndex !== null) {
+      const rows = document.querySelectorAll('table tr');
+      if (rows[dayIndex + 1]) { // +1 to skip header row
+        rows[dayIndex + 1].style.backgroundColor = '#ffe4b2';
+      }
+    }
+  });
+  // Replace text labels in .icon cells with <span> for styling
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.icon').forEach(function(td) {
+      let nodes = Array.from(td.childNodes).filter(n => n.nodeType === 3 && n.textContent.trim());
+      nodes.forEach(function(node) {
+        let span = document.createElement('span');
+        span.textContent = node.textContent.trim();
+        td.replaceChild(span, node);
+      });
+    });
+  });
+</script>
   <h2>Class VI C Timetable</h2>
   <table>
     <tr>
